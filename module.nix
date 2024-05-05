@@ -81,6 +81,9 @@ in
 
           Restart = "always";
 
+          # give it 45s to count up failures, since it takes a while to fail
+          DefaultStartLimitIntervalSec = "120s";
+
           KillSignal = "SIGINT";
         };
       }
