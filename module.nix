@@ -24,10 +24,15 @@ in
         wants = [ "network-online.target" ];
         after = [ "network.target" "network-online.target" ];
 
-        environment = {
-          # lmao I think github-runner writes to HOME/.runner
-          HOME = "/var/lib/github-actions-runners/${name}";
-        };
+        environment =
+          let
+            root = "/var/lib/github-actions-runners/${name}";
+          in
+          {
+            # lmao I think github-runner writes to HOME/.runner
+            HOME = root;
+            RUNNER_ROOT = root;
+          };
 
         path = (with pkgs; [
           bash
@@ -44,7 +49,7 @@ in
           WorkingDirectory = "/var/lib/github-actions-runners/${name}";
           LogsDirectory = [ "github-actions-runners/${name}" ];
           StateDirectory = [ "github-actions-runners/${name}" ];
-          
+
           ExecStart = "${pkgs.github-runner}/bin/Runner.Listener run --startuptype service";
           ExecStartPre = (pkgs.writeShellScript "pre" ''
             set -x
