@@ -77,7 +77,10 @@ in
             echo "_______________BEFORE111"
             ${pkgs.eza}/bin/eza --tree --level 3 -al $STATE_DIRECTORY/
             echo "_______________BEFORE"
-            find "$STATE_DIRECTORY/" -mindepth 1 -not -path "$STATE_DIRECTORY/work*" -delete
+            find "$STATE_DIRECTORY/" -mindepth 1 \
+              -not -path "$STATE_DIRECTORY/work*" \
+              -not -path "$STATE_DIRECTORY/.cache*" \
+              -delete
             echo "_______________AFTER"
             ${pkgs.eza}/bin/eza --tree --level 3 -al $STATE_DIRECTORY/
             
