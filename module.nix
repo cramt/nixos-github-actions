@@ -87,11 +87,11 @@ in
             ${cfg.package}/bin/Runner.Listener configure "''${args[@]}"
           '');
 
-          # fuckin systemd
-          # Restart = "always";
+          Restart = "always";
+          RestartSec = 300;
 
           # give it 45s to count up failures, since it takes a while to fail
-          DefaultStartLimitIntervalSec = "120s";
+          # StartLimitIntervalSec = "120s";
 
           KillSignal = "SIGINT";
         };
